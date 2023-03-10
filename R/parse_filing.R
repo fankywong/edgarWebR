@@ -35,8 +35,9 @@
 parse_filing <- function(x,
                          strip = TRUE,
                          include.raw = FALSE,
-                         fix.errors = TRUE) {
-  doc <- get_doc(x, clean = T)
+                         fix.errors = TRUE,
+                         useragent) {
+  doc <- get_doc(x, clean = T,useragent=useragent)
 
   xpath_base <- '//text'
   if (is.na(xml2::xml_find_first(doc, xpath_base))) {
