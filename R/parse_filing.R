@@ -117,8 +117,9 @@ parse_filing <- function(x,
 parse_text_filing <- function(x,
                               strip = TRUE,
                               include.raw = FALSE,
-                              fix.errors = TRUE) {
-  doc <- charToText(x)
+                              fix.errors = TRUE,
+                              useragent=NULL) {
+  doc <- dlToTextIfLink(x,useragent=useragent)
 
   # Make sure page markers are isolated
   doc <- gsub("([^\\n])\\n<PAGE>", "\\1\n\n<PAGE>", doc)
