@@ -25,7 +25,8 @@ company_details <- function(x,
                          type = "",
                          before="",
                          count = 40,
-                         page = 1) {
+                         page = 1,
+                         useragent=NULL) {
   # We want to accept a pre-fetched document or possibly a sub-page node
   doc <- if (is(x, "xml_node")) {
            x
@@ -35,7 +36,8 @@ company_details <- function(x,
                         type = type,
                         before = before,
                         count = count,
-                        page = page)
+                        page = page,
+                        useragent = useragent)
   }
 
   # 1 - Basic info
