@@ -19,7 +19,8 @@ browse_edgar <- function(ticker,
                          type = "",
                          before="",
                          count = 40,
-                         page = 1) {
+                         page = 1,
+                         useragent) {
   href <- paste0("https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany",
                 "&CIK=", URLencode(ticker, reserved = TRUE),
                 "&owner=", ifelse(ownership, "include", "exclude"),
@@ -29,7 +30,7 @@ browse_edgar <- function(ticker,
                 "&count=", count,
                 "&output=atom")
 
-  res <- edgar_GET(href)
+  res <- httr::GET(href, httr::user_agent(useragent))
   if (res$status != "200" | res$headers["content-type"] != "application/atom+xml") {
     stop(paste0("Could not find company: ", ticker));
   }
