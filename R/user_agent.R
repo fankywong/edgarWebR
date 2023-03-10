@@ -9,7 +9,9 @@ edgar_agent <- function(useragent) {
     stop("give useragent")
   } else if (is.null(useragent)& exists("EDGARWEBR_USER_AGENT")) {
     useragent=httr::user_agent(EDGARWEBR_USER_AGENT)
-  } 
+  }  else {
+    useragent=httr::user_agent(useragent)
+  }
   return(useragent)
 }
 edgar_GET <- function(href,useragent=NULL) {
