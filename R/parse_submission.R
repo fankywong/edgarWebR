@@ -56,8 +56,9 @@
 #' @export
 parse_submission <- function(x,
                              include.binary = T,
-                             include.content = T) {
-  res <- charToText(x)
+                             include.content = T,
+                             useragent=NULL) {
+  res <- dlToTextIfLink(x,useragent=useragent)
 
   # Checking if we have an SEC document is more efficient than checking if every
   # string is a file
