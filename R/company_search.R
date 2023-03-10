@@ -69,7 +69,8 @@ company_search <- function(x,
                            ownership = FALSE,
                            type = "",
                            count = 40,
-                           page = 1) {
+                           page = 1,
+                           useragent=NULL) {
   if (ownership == TRUE) ownership <- "include"
   if (ownership == FALSE) ownership <- "exclude"
   if (ownership == "") ownership <- "exclude"
@@ -88,7 +89,7 @@ company_search <- function(x,
     ifelse(page != 1, paste0("&start=", count * (page - 1)), ""),
     "&output=atom")
 
-  res <- edgar_GET(href)
+  res <- edgar_GET(href,useragent=useragent)
   doc <- xml2::read_xml(res, base_url = href, options = "HUGE")
   xml2::xml_ns_strip(doc)
 
