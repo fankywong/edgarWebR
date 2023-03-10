@@ -23,16 +23,19 @@ company_filings <- function(x,
                          type = "",
                          before="",
                          count = 40,
-                         page = 1) {
+                         page = 1,
+                         useragent=NULL  ) {
   doc <- if (is(x, "xml_node")) {
            x
          } else {
+           if(is.null(useragent)) stop("useragent is needed")
            browse_edgar(x,
                         ownership = ownership,
                         type = type,
                         before = before,
                         count = count,
-                        page = page)
+                        page = page,
+                        useragent = useragent)
          }
 
   entries_xpath <- "entry"
