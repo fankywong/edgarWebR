@@ -61,10 +61,10 @@ is_url <- function(x) {
   grepl("^(http|ftp)s?://", x, ignore.case = T)
 }
 
-get_doc <- function(x, clean = F,useragent) {
+get_doc <- function(x, clean = F,useragent=NULL) {
   if (typeof(x) == "character") {
     if (is_url(x)) {
-      res <- httr::GET(x, httr::user_agent(useragent))
+      res <- edgar_GET(x,useragent=useragent)
       content <- httr::content(res, encoding = "UTF-8", as = "text")
       if (clean) {
         content <- clean_html(content)
@@ -117,7 +117,7 @@ charToDoc <- function(x) {
 dlToTextIfLink <- function(x,useragent=NULL) {
   if (is_url(x)) {
     if(is.null(useragent)) stop("need useragent")
-    res <- httr::GET(x, httr::user_agent(useragent))
+    res <- edgar_GET(x,useragent=useragent)
     if (res$status != "200") {
       stop(paste0("Unable to reach the SEC endpoint (", x, ")"))
     }
