@@ -3,21 +3,27 @@
 # We do this to handle edgar-specific error messages and ensure we set the UA
 # and similar configuration properties once
 
-edgar_agent <- Sys.getenv(
-  "EDGARWEBR_USER_AGENT",
-  unset = "edgarWebR (https://github.com/mwaldstein/edgarWebR)"
-)
-ua <- httr::user_agent(edgar_agent)
 
-edgar_GET <- function(href) {
-  res <- httr::GET(href, ua)
+edgar_agent <- function(useragent) {
+  if(is.null(useragent) & !exists("EDGARWEBR_USER_AGENT")) {
+    stop("give useragent")
+  } else if (is.null(useragent)& exists("EDGARWEBR_USER_AGENT")) {
+    useragent=httr::user_agent(EDGARWEBR_USER_AGENT)
+  } 
+  return(useragent)
+}
+edgar_GET <- function(href,useragent=NULL) {
+  useragent=edgar_agent(useragent)
+  res <- httr::GET(href, useragent)
   check_result(res)
   return(res)
 }
 
-edgar_POST <- function(href, body, encode = "json") {
+
+edgar_POST <- function(href, body, encode = "json",useragent=NULL) {
   # res <- httr::POST(href, body = body, encode = encode, httr::verbose())
-  res <- httr::POST(href, body = body, encode = encode, ua)
+  useragent=edgar_agent(useragent)
+  res <- httr::POST(href, body = body, encode = encode, useragent)
   check_result(res)
   return(res)
 }
