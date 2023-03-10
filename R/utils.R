@@ -64,7 +64,7 @@ is_url <- function(x) {
 get_doc <- function(x, clean = F,useragent) {
   if (typeof(x) == "character") {
     if (is_url(x)) {
-      res <- httr::GET(href, httr::user_agent(useragent))
+      res <- httr::GET(x, httr::user_agent(useragent))
       content <- httr::content(res, encoding = "UTF-8", as = "text")
       if (clean) {
         content <- clean_html(content)
