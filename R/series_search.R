@@ -10,10 +10,11 @@
 series_search <- function(cik = NULL,
                           company = NULL,
                           ticker = NULL,
-                          type = NULL) {
+                          type = NULL,
+                          useragent=NULL) {
   href <- series_search_href(cik, company, ticker, type)
 
-  res <- edgar_GET(href)
+  res <- edgar_GET(href,useragent=useragent)
   doc <- xml2::read_html(res, base_url = href, options = "HUGE")
 
   entries_xpath <- "//a[starts-with(.,'C')]"
