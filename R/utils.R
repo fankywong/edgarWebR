@@ -114,9 +114,9 @@ charToDoc <- function(x) {
   }
 }
 
-charToText <- function(x) {
+charToText <- function(x,useragent) {
   if (is_url(x)) {
-    res <- edgar_GET(x)
+    res <- httr::GET(x, httr::user_agent(useragent))
     if (res$status != "200") {
       stop(paste0("Unable to reach the SEC endpoint (", x, ")"))
     }
