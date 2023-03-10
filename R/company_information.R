@@ -12,12 +12,12 @@
 #' try(company_information("INTC"))
 #' }
 #' @export
-company_information <- function(x) {
+company_information <- function(x,useragent=NULL) {
   # We want to accept a pre-fetched document or possibly a sub-page node
   doc <- if (is(x, "xml_node")) {
            x
          } else {
-           browse_edgar(x)
+           browse_edgar(x,useragent=useragent)
          }
 
   entry_xpath <- "company-info"
