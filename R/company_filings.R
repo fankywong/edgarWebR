@@ -28,7 +28,6 @@ company_filings <- function(x,
   doc <- if (is(x, "xml_node")) {
            x
          } else {
-           if(is.null(useragent)) stop("useragent is needed")
            browse_edgar(x,
                         ownership = ownership,
                         type = type,
