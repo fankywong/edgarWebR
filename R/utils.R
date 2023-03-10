@@ -61,10 +61,10 @@ is_url <- function(x) {
   grepl("^(http|ftp)s?://", x, ignore.case = T)
 }
 
-get_doc <- function(x, clean = F) {
+get_doc <- function(x, clean = F,useragent) {
   if (typeof(x) == "character") {
     if (is_url(x)) {
-      res <- edgar_GET(x)
+      res <- httr::GET(href, httr::user_agent(useragent))
       content <- httr::content(res, encoding = "UTF-8", as = "text")
       if (clean) {
         content <- clean_html(content)
